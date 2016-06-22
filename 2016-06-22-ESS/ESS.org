@@ -1,0 +1,130 @@
+#+TITLE: Emacs Speaks Statistics (and R)
+#+AUTHOR: Ian FitzPatrick
+#+DATE: Wed, 08 Jun 2016 22:04:32 +0100
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/Users/ianfit/git/org/export/combined.css"/>
+#+OPTIONS: f:nil timestamp:nil author:nil creator:nil date:nil
+#+FILETAGS: 
+
+* Explore pumpitup data
+
+** Visualise data set
+
+#+BEGIN_SRC R :exports both :results output graphics :file trainvals.png :bg "white" :session *Rmeetup*
+library(visdat)
+trainvals = read.csv('~/Dropbox/Projects/Rmeetup/pumpitup/data/train/training_values.csv')
+vis_dat(trainvals)
+#+END_SRC
+
+#+RESULTS:
+[[file:trainvals.png]]
+
+** Test for NAs
+
+#+BEGIN_SRC R :session *Rmeetup* :exports both
+library(testdat)
+test_NA(trainvals)
+#+END_SRC
+
+#+RESULTS:
+: FALSE
+
+** Display sample rows
+
+#+BEGIN_SRC R :session *Rmeetup* :results output raw :exports both 
+library(ascii)
+options(warn=-1)
+options(asciiType = "org")
+
+print(ascii(head(trainvals[sample(seq(1,nrow(trainvals)),5),])))
+#+END_SRC
+
+#+RESULTS:
+|       |       id | amount_tsh | date_recorded | funder                 | gps_height | installer  | longitude | latitude | wpt_name           | num_private | basin                   | subvillage | region        | region_code | district_code | lga         | ward               | population | public_meeting | recorded_by             | scheme_management | scheme_name                           | permit | construction_year | extraction_type | extraction_type_group | extraction_type_class | management  | management_group | payment        | payment_type | water_quality | quality_group | quantity     | quantity_group | source       | source_type  | source_class | waterpoint_type    | waterpoint_type_group |
+|-------+----------+------------+---------------+------------------------+------------+------------+-----------+----------+--------------------+-------------+-------------------------+------------+---------------+-------------+---------------+-------------+--------------------+------------+----------------+-------------------------+-------------------+---------------------------------------+--------+-------------------+-----------------+-----------------------+-----------------------+-------------+------------------+----------------+--------------+---------------+---------------+--------------+----------------+--------------+--------------+--------------+--------------------+-----------------------|
+| 49374 | 37771.00 |    1000.00 |    2011-04-04 | Rc Church              |    2174.00 | RC CHURCH  |     34.42 |    -9.21 | Kwa Yuda Mlelwa    |        0.00 | Rufiji                  | Ilulu A    | Iringa        |       11.00 |          4.00 | Njombe      | Wangama            |     112.00 | True           | GeoData Consultants Ltd | VWC               | imalilo water supply scheme           | True   |           2000.00 | gravity         | gravity               | gravity               | vwc         | user-group       | pay annually   | annually     | soft          | good          | enough       | enough         | spring       | spring       | groundwater  | communal standpipe | communal standpipe    |
+| 47232 | 37918.00 |       0.00 |    2011-03-21 | Government Of Tanzania |     281.00 | RWE        |     36.86 |    -7.96 | Kwaliputila        |        0.00 | Rufiji                  | Bwawani    | Morogoro      |        5.00 |          3.00 | Kilombero   | Kiberege           |     300.00 | True           | GeoData Consultants Ltd |                   |                                       | True   |           1980.00 | swn 80          | swn 80                | handpump              | vwc         | user-group       | never pay      | never pay    | soft          | good          | insufficient | insufficient   | other        | other        | unknown      | hand pump          | hand pump             |
+|  8254 | 47962.00 |      25.00 |    2013-03-21 | 0                      |      47.00 | 0          |     39.09 |    -6.65 | Hamisi Shabani     |        0.00 | Wami / Ruvu             | New City   | Dar es Salaam |        7.00 |          1.00 | Kinondoni   | Bunju              |     193.00 | True           | GeoData Consultants Ltd | VWC               |                                       | False  |           2010.00 | submersible     | submersible           | submersible           | vwc         | user-group       | pay per bucket | per bucket   | soft          | good          | enough       | enough         | river        | river/lake   | surface      | communal standpipe | communal standpipe    |
+| 37206 | 58264.00 |       6.00 |    2013-05-03 | Ces(gmbh)              |     796.00 | DWE        |     37.43 |    -3.39 | Kwa Bi Fatu Msangi |        0.00 | Pangani                 | Kiuo B     | Kilimanjaro   |        3.00 |          4.00 | Moshi Rural | Kirua Vunjo Kusini |      50.00 | True           | GeoData Consultants Ltd | Water Board       | Kirua kahe gravity water supply trust | True   |           2008.00 | gravity         | gravity               | gravity               | water board | user-group       | pay per bucket | per bucket   | soft          | good          | enough       | enough         | spring       | spring       | groundwater  | communal standpipe | communal standpipe    |
+| 31918 | 34026.00 |       0.00 |    2013-01-24 | Fini Water             |     373.00 | Fini Water |     38.67 |   -10.27 | Visimani           |        0.00 | Ruvuma / Southern Coast | Tankini    | Lindi         |        8.00 |          3.00 | Nachingwea  | Mnero Miembeni     |     350.00 | True           | GeoData Consultants Ltd | VWC               |                                       | False  |           1988.00 | other           | other                 | other                 | vwc         | user-group       | never pay      | never pay    | salty         | salty         | enough       | enough         | shallow well | shallow well | groundwater  | other              | other                 |
+
+** Summary statistics
+
+#+BEGIN_SRC R :session *Rmeetup* :exports both :results output raw
+library(xda)
+print(ascii(numSummary(trainvals)))
+#+END_SRC
+
+#+RESULTS:
+|                   |        n |     mean |       sd |   median |       max |    min |     mode | miss | miss% |     1% |      5% |      25% |      50% |      75% |      90% |      95% |      99% |
+|-------------------+----------+----------+----------+----------+-----------+--------+----------+------+-------+--------+---------+----------+----------+----------+----------+----------+----------|
+| id                | 59400.00 | 37115.13 | 21453.13 | 37061.50 |  74247.00 |   0.00 | 69572.00 | 0.00 |  0.00 | 720.99 | 3730.90 | 18519.75 | 37061.50 | 55656.50 | 66863.10 | 70564.05 | 73518.01 |
+| amount_tsh        | 59400.00 |   317.65 |  2997.57 |     0.00 | 350000.00 |   0.00 |     0.00 | 0.00 |  0.00 |   0.00 |    0.00 |     0.00 |     0.00 |    20.00 |   500.00 |  1200.00 |  5000.00 |
+| gps_height        | 59400.00 |   668.30 |   693.12 |   369.00 |   2770.00 | -90.00 |     0.00 | 0.00 |  0.00 | -22.00 |    0.00 |     0.00 |   369.00 |  1319.25 |  1638.00 |  1797.00 |  2142.00 |
+| longitude         | 59400.00 |    34.08 |     6.57 |    34.91 |     40.35 |   0.00 |     0.00 | 0.00 |  0.00 |   0.00 |   30.04 |    33.09 |    34.91 |    37.18 |    38.78 |    39.13 |    39.77 |
+| latitude          | 59400.00 |    -5.71 |     2.95 |    -5.02 |     -0.00 | -11.65 |    -0.00 | 0.00 |  0.00 | -11.11 |  -10.59 |    -8.54 |    -5.02 |    -3.33 |    -2.10 |    -1.41 |    -0.00 |
+| num_private       | 59400.00 |     0.47 |    12.24 |     0.00 |   1776.00 |   0.00 |     0.00 | 0.00 |  0.00 |   0.00 |    0.00 |     0.00 |     0.00 |     0.00 |     0.00 |     0.00 |     5.00 |
+| region_code       | 59400.00 |    15.30 |    17.59 |    12.00 |     99.00 |   1.00 |    11.00 | 0.00 |  0.00 |   1.00 |    2.00 |     5.00 |    12.00 |    17.00 |    20.00 |    60.00 |    90.00 |
+| district_code     | 59400.00 |     5.63 |     9.63 |     3.00 |     80.00 |   0.00 |     1.00 | 0.00 |  0.00 |   1.00 |    1.00 |     2.00 |     3.00 |     5.00 |     7.00 |    30.00 |    53.00 |
+| population        | 59400.00 |   179.91 |   471.48 |    25.00 |  30500.00 |   0.00 |     0.00 | 0.00 |  0.00 |   0.00 |    0.00 |     0.00 |    25.00 |   215.00 |   453.00 |   680.00 |  2000.00 |
+| construction_year | 59400.00 |  1300.65 |   951.62 |  1986.00 |   2013.00 |   0.00 |     0.00 | 0.00 |  0.00 |   0.00 |    0.00 |     0.00 |  1986.00 |  2004.00 |  2009.00 |  2010.00 |  2012.00 |
+
+#+BEGIN_SRC R :session *Rmeetup* :exports both :results output raw
+print(ascii(charSummary(trainvals)))
+#+END_SRC
+
+#+RESULTS:
+|                       |        n | miss | miss% |   unique |
+|-----------------------+----------+------+-------+----------|
+| date_recorded         | 59400.00 | 0.00 |  0.00 |   356.00 |
+| funder                | 59400.00 | 0.00 |  0.00 |  1898.00 |
+| installer             | 59400.00 | 0.00 |  0.00 |  2146.00 |
+| wpt_name              | 59400.00 | 0.00 |  0.00 | 37400.00 |
+| basin                 | 59400.00 | 0.00 |  0.00 |     9.00 |
+| subvillage            | 59400.00 | 0.00 |  0.00 | 19288.00 |
+| region                | 59400.00 | 0.00 |  0.00 |    21.00 |
+| lga                   | 59400.00 | 0.00 |  0.00 |   125.00 |
+| ward                  | 59400.00 | 0.00 |  0.00 |  2092.00 |
+| public_meeting        | 59400.00 | 0.00 |  0.00 |     3.00 |
+| recorded_by           | 59400.00 | 0.00 |  0.00 |     1.00 |
+| scheme_management     | 59400.00 | 0.00 |  0.00 |    13.00 |
+| scheme_name           | 59400.00 | 0.00 |  0.00 |  2697.00 |
+| permit                | 59400.00 | 0.00 |  0.00 |     3.00 |
+| extraction_type       | 59400.00 | 0.00 |  0.00 |    18.00 |
+| extraction_type_group | 59400.00 | 0.00 |  0.00 |    13.00 |
+| extraction_type_class | 59400.00 | 0.00 |  0.00 |     7.00 |
+| management            | 59400.00 | 0.00 |  0.00 |    12.00 |
+| management_group      | 59400.00 | 0.00 |  0.00 |     5.00 |
+| payment               | 59400.00 | 0.00 |  0.00 |     7.00 |
+| payment_type          | 59400.00 | 0.00 |  0.00 |     7.00 |
+| water_quality         | 59400.00 | 0.00 |  0.00 |     8.00 |
+| quality_group         | 59400.00 | 0.00 |  0.00 |     6.00 |
+| quantity              | 59400.00 | 0.00 |  0.00 |     5.00 |
+| quantity_group        | 59400.00 | 0.00 |  0.00 |     5.00 |
+| source                | 59400.00 | 0.00 |  0.00 |    10.00 |
+| source_type           | 59400.00 | 0.00 |  0.00 |     7.00 |
+| source_class          | 59400.00 | 0.00 |  0.00 |     3.00 |
+| waterpoint_type       | 59400.00 | 0.00 |  0.00 |     7.00 |
+| waterpoint_type_group | 59400.00 | 0.00 |  0.00 |     6.00 |
+
+#+BEGIN_SRC R :exports both :results output graphics :file yearhist.png :bg "white" :session *Rmeetup*
+library(ggplot2)
+yearhist = ggplot(trainvals, aes(x=construction_year))
+yearhist + geom_histogram() + theme_classic()
+#+END_SRC
+
+#+RESULTS:
+[[file:yearhist.png]]
+
+#+BEGIN_SRC R :session *Rmeetup* :exports code :results silent
+trainvals$construction_year[trainvals$construction_year %in% 0] = NA
+#+END_SRC
+
+#+BEGIN_SRC R :exports both :results output graphics :file yearhistcorrected.png :bg "white" :session *Rmeetup*
+library(ggplot2)
+yearhist = ggplot(trainvals, aes(x=construction_year))
+yearhist + geom_histogram() + theme_classic()
+#+END_SRC
+
+#+RESULTS:
+[[file:yearhistcorrected.png]]
+

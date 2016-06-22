@@ -1,0 +1,127 @@
+#+Hi-lock: (("REF" (0 (quote hi-yellow) prepend)))
+#+Hi-lock: (("[FF]IXME" (0 (quote hi-yellow) prepend)))
+#+TITLE: Emacs speaks statistics (and R)
+#+AUTHOR: Ian FitzPatrick
+#+EMAIL: ian@ianfitzpatrick.eu
+#+DATE: Fri, 17 Jun 2016 13:39:13 +0100
+#+FILETAGS: 
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:nil p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:nil todo:t |:t
+#+CREATOR: Emacs 24.4.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+
+#+COMPANY: Heinrich Heine Universität Düsseldorf
+#+WWW: http://www.ianfitzpatrick.eu
+#+GITHUB: http://github.com/ifitzpat
+#+TWITTER: @ifitzpat
+
+#+FAVICON: images/org-icon.png
+#+ICON: images/emacs-icon.png
+#+HASHTAG: 
+
+
+* What is emacs?
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** What is emacs?
+  :PROPERTIES:
+  :ARTICLE:  large
+  :END:
+#+ATTR_HTML: :class build fade
+- Emacs is a text editor
+- Emacs is an IDE
+- Emacs is an operating system
+** Emacs is a text editor
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+** Editor wars
+#+BEGIN_CENTER
+#+ATTR_HTML: :width 400px
+[[file:images/editorwars.jpg]]
+#+END_CENTER
+** Emacs acronyms
+:PROPERTIES:
+  :ARTICLE:  large
+  :END:
+#+ATTR_HTML: :class build
+- Escape Meta Alt Control Shift
+- Eight Megabytes And Constantly Swapping
+** LISP
+- Lots of Irritating Superfluous Parentheses
+#+BEGIN_SRC lisp
+(defun if/clean-bib ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "@article" nil t)
+      (setq myline (thing-at-point 'line t))
+      (setq last-char (substring myline -2 -1))
+      (if (not (string-match last-char ","))
+	  (progn
+	   (move-end-of-line nil)
+	   (insert ","))
+	)))
+  )
+#+END_SRC
+** Emacs is an IDE
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+*** projectile
+- any visited file within a git repository is a project
+- projectile lets you easily:
+  - switch between projects
+  - search within projects
+*** magit
+- git interface from within emacs
+*** ESS mode
+- view workspace with Rdired
+- use multiple R processes
+- automatically recognise parameters for even custom functions
+*** EIN
+- connect to jupyter notebooks 
+*** org mode
+- a tool for reproducible research
+  - org babel
+  - org todo
+  - org agenda
+  - org capture
+** Emacs is an operating system
+  :PROPERTIES:
+  :SLIDE:    segue dark quote
+  :ASIDE:    right bottom
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
+*** tramp mode
+- allows you to edit files remotely
+- allows you to run remote R processes
+*** eshell
+- a linux shell based on lisp code
+*** dired
+- easy batch processing of files
+* Emacs starter kits
+
+- Spacemacs
+- Prelude
+- Kieran Healy (starter kit for social science)
+
+* Thank you
+  :PROPERTIES:
+  :SLIDE:    thank-you-slide segue
+  :ASIDE:    right
+  :ARTICLE:  flexbox vleft auto-fadein
+  :END:
