@@ -15,3 +15,21 @@ Aan de hand nemen middels notebook met korte opdrachten en af en toe voor de han
 28 november 2016
 Actief formulier: https://docs.google.com/forms/d/e/1FAIpQLSeSl6ImU8J1AG3x227Vb5U42QBRJr8LaZU5qyw92Ga9qSxw_A/formResponse
 
+== Inhoud ==
+R uitleggen
+Python uitleggen
+(database - temporele gebruiken?)
+
+Via jupyter notebooks (python leading en via magics R importeren)
+
+Inhoudsopgave:
+1. Ophalen van data met Python
+- opendata.nijmegen.nl (samenstelling leeftijd, inkomen, werkzoekend, etniciteit)
+- misdaad in kaart (politie.nl)
+- http://www.gaingate.com/postcode/nederland.htm (wijk naam naar postcode)
+- Geodata kaart maken (https://www.pdok.nl/ en http://www.nationaalgeoregister.nl/geonetwork/srv/dut/search)
+- Alarm diensten data (http://www.oozo.nl/)
+2. 
+3. Potentiele vragen
+   a) Klopt het dat in de wijken waar meer "gebeurt" ook vaker de hulpdiensten uitrukken? Validatie van gegevens van de politie
+   b) Klopt het dat nieuw gevormde "gemengde" wijken minder crimineel zijn?
