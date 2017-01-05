@@ -10,7 +10,7 @@ shapesNijmegen <- shapes[na.omit(shapes$GM_NAAM == "Nijmegen"),]
 plot(shapesNijmegen)
 text(coordinates(shapesNijmegen), labels=shapesNijmegen$BU_NAAM, cex=0.6)
 
-# Use rddalto read shape data and build plot with data
+# Use rgdal to read shape data and build plot with data
 
 ## Read data and transform coordinates into Google type
 shapes <- readOGR("uitvoer_shape", "buurt_2014")
