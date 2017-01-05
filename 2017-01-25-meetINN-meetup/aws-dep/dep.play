@@ -1,0 +1,59 @@
+- name: Create a sandbox instance
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - include_vars: "vault-vars.yml"
+    - include_vars: "vars.yml"
+    - name: Setup VPC
+      ec2_vpc:
+        ec2_url: "{{ ec2_url }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: present
+        cidr_block: 172.23.0.0/16
+        resource_tags: { "Environment":"Development" }
+        region: "{{ region }}"
+        subnets:
+          - cidr: 172.23.1.0/24
+            az: "{{ zone }}"
+            resource_tags: { "Environment":"Dev", "Tier" : "Web" }
+      register: vpc
+
+    - name: Create a security group
+      ec2_group:
+        ec2_url: "{{ ec2_url }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        name: "{{ security_group }}"
+        description: Security Group for webserver Servers
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+        vpc_id: "{{ vpc.vpc_id }}"
+        #rules_egress:
+        #  - proto: all
+        #    cidr_ip: 0.0.0.0/0
+      register: basic_firewall
+
+    - name: Launch instance
+      ec2:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         key_name: "{{ keypair }}"
+         group_id: "{{ basic_firewall.group_id }}"
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         zone: "{{ zone }}"
+         vpc_subnet_id: "{{ vpc.subnets[0]['id'] }}"
+         #assign_public_ip: yes
+      register: ec2
