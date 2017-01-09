@@ -42,7 +42,7 @@ Te beginnen bij [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-
   van het README bestand.
 * Elke notebook stack is compatibel met [JupyterHub](https://jupyterhub.readthedocs.io) 0.5.
   Als je het gebruikt met JupyterHub, dan moet je het Docker run commando laten wijzen naar
-  het [start-singleuser.sh](base-notebook/start-singleuser.sh) script,
+  het [start-singleuser.sh](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start-singleuser.sh) script,
   dat een single-user instantie van de Notebook server start.
   Zie het README bestand van elke stack voor instructies over het gebruik op JupyterHub.
 * Check de [Docker recipes wiki pagina](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes)
