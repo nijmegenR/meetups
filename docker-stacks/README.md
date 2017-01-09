@@ -24,7 +24,7 @@ Als je Docker voor het eerst gaat gebruiken, dan moet je de volgende stappen uit
 Dit is een diagram van de `FROM` relaties tussen de images die in dit project en jupyter/data-stack
 gedefinieerd zijn.
 
-[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyNjsEKwjAMhu97irJ77-KY6M27RxFJ10ziuma0EZniu7sKgh2CHvP9X_7EOG46S3BS90IpDoReQIi9qtXAQQKQVFNisYWLk2PLXiLdcIoXiW_U3oFBV5cWDYFfnjFGwvVuuykPVfEy9EoZiKg9CxrmLu1lIBk9eerBZdKcJS82NIyZlZPkWBDQE0bf4Ov5j3me6xPy9xZBHzm0jq9_nHu3_Xo__OgaxjhA6DJrzpIHzum5-XgCjheeDg)
+[![Image inheritance diagram](internal/inheritance.png)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyNjsEKwjAMhu97irJ77-KY6M27RxFJ10ziuma0EZniu7sKgh2CHvP9X_7EOG46S3BS90IpDoReQIi9qtXAQQKQVFNisYWLk2PLXiLdcIoXiW_U3oFBV5cWDYFfnjFGwvVuuykPVfEy9EoZiKg9CxrmLu1lIBk9eerBZdKcJS82NIyZlZPkWBDQE0bf4Ov5j3me6xPy9xZBHzm0jq9_nHu3_Xo__OgaxjhA6DJrzpIHzum5-XgCjheeDg)
 
 ## Stacks, Tags, Versies en Voortgang
 
