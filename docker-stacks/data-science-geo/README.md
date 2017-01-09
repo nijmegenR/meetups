@@ -15,11 +15,14 @@
 * Gebruiker `jovyan` zonder privileges (uid=1000, configureerbaar, zie opties) in de groep `users`
   (gid=100), eigenaar van `/home/jovyan` en `/opt/conda`
 * [tini](https://github.com/krallin/tini) is de container-ingang en
-  [start-notebook.sh](../base-notebook/start-notebook.sh) is het standaard commando
-* Een [start-singleuser.sh](../base-notebook/start-singleuser.sh) script dat handig is voor het draaien
-  van een single-user instantie van de Notebook server, zoals door JupyterHub wordt vereist
-* Een [start.sh](../base-notebook/start.sh) script voor het draaien van alternatieve commando's in
-  de container (bijv. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
+  [start-notebook.sh](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start-notebook.sh)
+  is het standaard commando
+* Een [start-singleuser.sh](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start-singleuser.sh)
+  script dat handig is voor het draaien van een single-user instantie van de Notebook server,
+  zoals door JupyterHub wordt vereist
+* Een [start.sh](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
+  script voor het draaien van alternatieve commando's in de container (bijv. `ipython`,
+  `jupyter kernelgateway`, `jupyter lab`)
 * Opties voor een self-signed HTTPS certificate en `sudo` zonder wachtwoord
 
 ## Basis gebruik
@@ -37,7 +40,8 @@ als wachtwoord in het login scherm.
 
 ## Notebook Opties
 
-De Docker container voor standaar het [`start-notebook.sh` script](../base-notebook/start-notebook.sh)
+De Docker container voor standaar het
+[`start-notebook.sh` script](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start-notebook.sh)
 script uit.
 Het `start-notebook.sh` script voert de `NB_UID` and `GRANT_SUDO` features uit zoals beschreven
 in de volgende sectie, en daarna het the `jupyter notebook`.
