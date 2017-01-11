@@ -85,7 +85,7 @@ retry/%:
 	done ; exit 1
 
 tag/%: ##tag the latest stack image with the HEAD git SHA
-	docker tag -f $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
+	docker tag $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
 tag-all: $(ALL_IMAGES:%=tag/%) ## tag all stacks
 

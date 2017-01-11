@@ -17,11 +17,13 @@ RUN apt-get update && \
 
 USER $NB_USER
 
+RUN conda install --quiet --yes \
+       'pandas>=0.17.0'
+
 # R packages including IRKernel which gets installed globally.
 # Pin r-base to a specific build number for https://github.com/jupyter/docker-stacks/issues/210#issuecomment-246081809
-RUN conda config --add channels r && \
-    conda config --add channels conda-forge && \
-    conda config --add channels defaults && \
+RUN conda config --append channels r && \
+    conda config --append channels conda-forge && \
     conda install --quiet --yes \
        'rpy2=2.8*' \
        'r-base=3.3.1 1' \
