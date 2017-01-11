@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+		<title>Witek ten Hove</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+			    <h1>Smart Education</h1>
+			    <h3>Samen bouwen aan toponderwijs</h3>
+				</section>
+				<section data-background-image="image/me.jpg">
+			    <h2>Witek ten Hove</h2>
+			    <h4>Coördinator Minor Smart Industry</h4>
+			    <h4>Docent Bedrijfseconomie HAN</h4>
+			    <a href="https://nl.linkedin.com/pub/witold-witek-f-ten-hove/14/113/836">
+      
+          <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_myprofile_160x33.png" width="160" height="33" border="0" alt="View Witold (Witek) F. ten Hove's profile on LinkedIn">
+        
+          </a>
+				</section>
+				<section>
+				  <iframe src="https://docs.google.com/spreadsheets/d/1WP6w5G_tU0KjAFo8ELOM1Ret_3iVXBppiPTffU040Zc/edit?usp=sharing" width = "100%" height = "800"></iframe>
+				</section>
+				<section data-transition="zoom">
+				  <video data-autoplay src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" width="100%" height="100%" controls="true"></video>
+				</section>
+				
+				<section data-background-video="video/MOVIE.mp4" data-background-color="#000000" data-background-transition="zoom">
+					</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+				
+				width: "100%",
+        height: "100%",
+        margin: 0,
+        minScale: 1,
+        maxScale: 1,
+        
+        chalkboard: {
+          theme: "whiteboard",
+          color: [ 'Red', 'rgba(255,255,255,0.5)' ]
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+				  { src: 'plugin/chalkboard/chalkboard.js', async: true },
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				],
+			});
+		</script>
+	</body>
+</html>
