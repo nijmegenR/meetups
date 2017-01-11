@@ -16,17 +16,26 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_USER
+# First install packages from 'defaults'
+RUN conda config --add channels defaults && \
+    conda install --quiet --yes \
+       'fiona=1.7.*' \
+       'psycopg2' \
+       'pyproj' \
+       'pysal' \
+       'shapely'
 
 # R packages including IRKernel which gets installed globally.
 # Pin r-base to a specific build number for https://github.com/jupyter/docker-stacks/issues/210#issuecomment-246081809
-RUN conda config --add channels conda-forge && \
-    conda config --add channels r && \
-    conda config --add channels defaults && \
+RUN conda config --add channels r && \
     conda install --quiet --yes \
        'r-maptools=0.8*' \
        'r-mapproj=1.2*' \
        'r-maps=3.1.*' \
-       'r-spatial=7.3*' \
+       'r-spatial=7.3*' 
+
+RUN conda config --add channels conda-forge && \
+    conda install --quiet --yes \
        'geopandas=0.2.*' && \
     conda clean -tipsy && \
     rm -rf $HOME/.local
