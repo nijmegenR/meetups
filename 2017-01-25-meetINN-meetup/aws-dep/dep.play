@@ -1,4 +1,4 @@
-- name: Create a sandbox instance
+- name: Create jupyter notebook in the cloud
   hosts: localhost
   gather_facts: False
   tasks:
@@ -10,13 +10,13 @@
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         state: present
-        cidr_block: 172.23.0.0/16
-        resource_tags: { "Environment":"Development" }
+        cidr_block: 172.25.0.0/16
+        resource_tags: { "Name":"Meetup vpc" }
         region: "{{ region }}"
         subnets:
-          - cidr: 172.23.1.0/24
+          - cidr: 172.25.1.0/24
             az: "{{ zone }}"
-            resource_tags: { "Environment":"Dev", "Tier" : "Web" }
+            resource_tags: { "Name":"Notebook subnet"}
       register: vpc
 
     - name: Create a security group
@@ -24,8 +24,8 @@
         ec2_url: "{{ ec2_url }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
-        name: "{{ security_group }}"
-        description: Security Group for webserver Servers
+        name: sgjupnot
+        description: Security Group for jupyter notebooks
         region: "{{ region }}"
         rules:
           - proto: tcp
@@ -55,5 +55,7 @@
          region: "{{ region }}"
          zone: "{{ zone }}"
          vpc_subnet_id: "{{ vpc.subnets[0]['id'] }}"
+         instance_tags: { "name": "meetup notebook"}
          #assign_public_ip: yes
       register: ec2
+

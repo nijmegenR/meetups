@@ -1,10 +1,8 @@
 aws_access_key: "{{ vault_aws_access_key }}"
 aws_secret_key: "{{ vault_aws_secret_key }}"
 ec2_url: "{{ vault_ec2_url }}"
-keypair: 
+keypair: "{{ vault_ec2_keypair }}"
 instance_type: t2.micro
-security_group: test-ansible
 image: ami-c51e3eb6
 region: eu-west-1
 zone: eu-west-1c
-vpc_subnet_id: subnet-0b15e452
