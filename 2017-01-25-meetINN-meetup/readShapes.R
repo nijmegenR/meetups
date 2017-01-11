@@ -4,6 +4,7 @@ library(ggmap)
 library(sp)
 library(rgdal)
 
+
 # Use maptools to read shape data en make test plot
 shapes <- readShapePoly("uitvoer_shape/buurt_2014.shp")
 shapesNijmegen <- shapes[na.omit(shapes$GM_NAAM == "Nijmegen"),]
