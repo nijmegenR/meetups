@@ -32,7 +32,7 @@ dfNijmegen[dfNijmegen == -99999999] <- NA
 
 ## Plot data
 mapCenter <- geocode("Nijmegen")
-Nijmegen <- get_map(c(lon=mapCenter$lon, lat=mapCenter$lat),zoom = 12)#, maptype = "terrain", source="stamen")
+Nijmegen <- get_map(c(lon=mapCenter$lon, lat=mapCenter$lat),zoom = 12)#, maptype = "terrain", source="google")
 NijmegenMap <- ggmap(Nijmegen)
 NijmegenMap <- NijmegenMap +
   geom_polygon(aes(x=long, y=lat, group=group, fill=P_GESCHEID),
