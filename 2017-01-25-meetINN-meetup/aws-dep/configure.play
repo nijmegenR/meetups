@@ -1,0 +1,41 @@
+---
+- name: Configure aws instance
+  hosts: aws_hosts
+  gather_facts: false
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Install docker
+      yum: 
+        name: docker
+        state: latest 
+    - name: Ensure docker is running
+      service:
+        name: docker 
+        state: started
+    - name: Install pip
+      easy_install: 
+        name=pip 
+        state=latest
+    - name: Install docker-py
+      pip: 
+        name=docker-py 
+        executable=/usr/local/bin/pip
+    - name: Add user to docker group
+      user:
+        name: ec2-user
+        append: yes
+        groups: docker
+    - name: pull meetup docker image
+      docker_image:
+        name: 'nijmegenr/h2o-geo:latest'
+        pull: True
+        state: present
+    - name: start docker container
+      docker_container:
+        name: "jupyternote"
+        image: 'nijmegenr/h2o-geo:latest'
+        pull: no
+        state: started
+        published_ports: 80:8888

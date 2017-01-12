@@ -25,6 +25,7 @@
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         name: sgjupnot
+        state: present
         description: Security Group for jupyter notebooks
         region: "{{ region }}"
         rules:
@@ -42,11 +43,39 @@
         #    cidr_ip: 0.0.0.0/0
       register: basic_firewall
 
+    - name: Create internet gateway
+      ec2_vpc_igw:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         vpc_id: "{{ vpc.vpc_id }}"
+         region: "{{ region }}"
+         state: present
+      register: igw     
+
+    - name: Set up public subnet route table
+      ec2_vpc_route_table:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         vpc_id: "{{ vpc.vpc_id }}"
+         region: "{{ region }}"
+         state: present
+         tags:
+           Name: Public
+         subnets:
+           - "{{ vpc.subnets[0]['id'] }}"
+         routes:
+           - dest: 0.0.0.0/0
+             gateway_id: "{{ igw.gateway_id }}"
+      register: public_route_table
+ 
     - name: Launch instance
       ec2:
          ec2_url: "{{ ec2_url }}"
          aws_access_key: "{{ aws_access_key }}"
          aws_secret_key: "{{ aws_secret_key }}"
+         state: present
          key_name: "{{ keypair }}"
          group_id: "{{ basic_firewall.group_id }}"
          instance_type: "{{ instance_type }}"
@@ -55,7 +84,7 @@
          region: "{{ region }}"
          zone: "{{ zone }}"
          vpc_subnet_id: "{{ vpc.subnets[0]['id'] }}"
-         instance_tags: { "name": "meetup notebook"}
-         #assign_public_ip: yes
+         instance_tags: {"name": "meetup notebook"}
+         assign_public_ip: yes
       register: ec2
 
