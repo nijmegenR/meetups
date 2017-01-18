@@ -19,6 +19,7 @@ USER $NB_USER
 # First install packages from 'defaults'
 RUN conda config --add channels conda-forge && \
     conda install --quiet --yes \
+       'jpeg=8*' \
        'fiona=1.7.*' \
        'geos=3.5.0' \
        'psycopg2' \
