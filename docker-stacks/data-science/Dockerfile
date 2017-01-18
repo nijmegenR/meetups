@@ -42,9 +42,12 @@ RUN conda config --append channels r && \
        'r-nycflights13=0.2*' \
        'r-caret=6.0*' \
        'r-rcurl=1.95*' \
-       'r-feather=0.3.*' \
        'r-randomforest=4.6*' \
-       'feather-format=0.3.*' && \
+       'r-feather=0.3.0' \
+       'feather-format=0.3.0'
+
+# add Damián Avila's excellent notebook extension to create Reveal enabled slides
+RUN conda install --quiet --yes -c damianavila82 rise && \
     conda clean -tipsy && \
     rm -rf $HOME/.local
 

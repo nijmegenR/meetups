@@ -1,7 +1,7 @@
 # Copyright (c) Data Computing.
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM nijmegenr/data-science
+FROM nijmegenr/data-science-geo
 
 MAINTAINER Data Computing <info@datacomputing.nl>
 
@@ -19,13 +19,13 @@ USER $NB_USER
 # First install packages from 'defaults'
 RUN conda config --add channels conda-forge && \
     conda install --quiet --yes \
-       'fiona=1.7.*' \
-       'geos=3.5.0' \
-       'psycopg2' \
-       'pyproj' \
-       'pysal' \
-       'shapely' \
-       'geopandas=0.2.*' && \
+       'h2o' \
+       'h2o-py' && \
     conda clean -tipsy && \
     rm -rf $HOME/.local
+
+RUN wget https://cran.r-project.org/src/contrib/statmod_1.4.27.tar.gz && \
+    wget https://cran.r-project.org/src/contrib/h2o_3.10.2.2.tar.gz && \
+    R CMD INSTALL statmod_1.4.27.tar.gz h2o_3.10.2.2.tar.gz && \
+    rm statmod_1.4.27.tar.gz h2o_3.10.2.2.tar.gz
 
