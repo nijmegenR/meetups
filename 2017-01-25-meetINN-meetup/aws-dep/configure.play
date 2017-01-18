@@ -39,3 +39,7 @@
         pull: no
         state: started
         published_ports: 80:8888
+
+
+## TODO: add jupyter hub (package) in order to control
+##       jupyter logins.

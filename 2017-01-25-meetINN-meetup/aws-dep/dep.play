@@ -51,7 +51,7 @@
          vpc_id: "{{ vpc.vpc_id }}"
          region: "{{ region }}"
          state: present
-      register: igw     
+      register: igw
 
     - name: Set up public subnet route table
       ec2_vpc_route_table:
@@ -61,12 +61,13 @@
          vpc_id: "{{ vpc.vpc_id }}"
          region: "{{ region }}"
          state: present
-         tags:
-           Name: Public
+         tags: { 'Name': 'Public' }
          subnets:
            - "{{ vpc.subnets[0]['id'] }}"
+#           - "{{ vpc.subnet.id }}"
          routes:
            - dest: 0.0.0.0/0
+#           - gateway_id: igw-13c21b77
              gateway_id: "{{ igw.gateway_id }}"
       register: public_route_table
  

@@ -1,2 +1,4 @@
 [aws_hosts]
-52.211.1.83 ansible_user=ec2-user
+52.50.253.83 ansible_user=ec2-user
+
+
