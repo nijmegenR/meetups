@@ -138,17 +138,13 @@ img#noborder {border:none !important; }
 </section>
 
 <section class="transbox grad">
-<h2>Case understanding</h2><br><br>
+<h2>1. Case understanding</h2>
+<p> We wanted to know the following:</p>
 <span style="background-color: Red">&nbspQ: <q>Can we predict crime rates in a borough through demographic data?&nbsp</q></span>
 </section>
 
-<section class="present" style="top: 2px; display: block;">
-<iframe src="https://yihui.shinyapps.io/miniUI/" width="1000px" height="600px"></iframe>
-</section>
-
-
 <section class="transbox grad">
-<h2>Data understanding</h2>
+<h2>2. Data understanding</h2>
 <ul>
 <li> We used two data sets from the CBS </li>
 <li><a href="https://www.cbs.nl/-/media/_pdf/2016/35/shape%202014%20versie%2030.zip">
@@ -157,26 +153,34 @@ Source: CBS 2014 Demographic data on borough level - with shape data</a></li>
 Source: CBS Crime rate per municipality and borough 2010-2015</a></li>
 </ul>
 </section>
+<section >
 <section class="transbox grad">
-<h2>Data preparation</h2>
-<h3>Python</h3>
-<p>Read data sources<p/>
-<p>Merge demographic data with crime rates<p/>
-<p>Visual data exploration<p/>
-<img id="noborder" src="images/Rplot.png" height="375" width="500"><br>
+<h2>3. Data preparation</h2>
+<h3>Python to prepare the data</h3>
+<ul>
+<li>Read data sources</li>
+<li>Merge demographic data with crime rates</li>
+<li>Visual data exploration</li>
+</ul>
+</section>
+<section>
+<iframe src="https://tenhove.shinyapps.io/datanijmegen/" width="1000px" height="600px"></iframe>
+</section>
 </section>
 
 <section class="transbox grad">
-<h2>Data preparation</h2>
-<h3>Module: Feather</h3>
-<p>Write data to feather file</p>
+<h2>3. Data preparation</h2>
+<h3>Share data with feather</h3>
+<p>Write and read data with feather file between R and Python</p>
 <h3>R</h3>
-<p>Initialize h2o environment<p/>
-<p>Read feather file<p/>
-<p>Make subset of Nijmegen<p/>
-<p>Make subset of Netherlands w/o Nijmegen<p/>
-<p>Fit linear model on training data<p/>
-<p>Predict on test data<p/>
+<ul>
+<li>Initialize h2o environment</li>
+<li>Read feather file</li>
+<li>Make subset of Nijmegen</li>
+<li>Make subset of Netherlands w/o Nijmegen</li>
+<li>Fit linear model on training data</li>
+<li>Predict on test data</li>
+</ul>
 </section>
 </div>
 </div>
