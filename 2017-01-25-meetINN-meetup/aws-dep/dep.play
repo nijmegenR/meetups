@@ -1,0 +1,91 @@
+- name: Create jupyter notebook in the cloud
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - include_vars: "vault-vars.yml"
+    - include_vars: "vars.yml"
+    - name: Setup VPC
+      ec2_vpc:
+        ec2_url: "{{ ec2_url }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: present
+        cidr_block: 172.25.0.0/16
+        resource_tags: { "Name":"Meetup vpc" }
+        region: "{{ region }}"
+        subnets:
+          - cidr: 172.25.1.0/24
+            az: "{{ zone }}"
+            resource_tags: { "Name":"Notebook subnet"}
+      register: vpc
+
+    - name: Create a security group
+      ec2_group:
+        ec2_url: "{{ ec2_url }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        name: sgjupnot
+        state: present
+        description: Security Group for jupyter notebooks
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+        vpc_id: "{{ vpc.vpc_id }}"
+        #rules_egress:
+        #  - proto: all
+        #    cidr_ip: 0.0.0.0/0
+      register: basic_firewall
+
+    - name: Create internet gateway
+      ec2_vpc_igw:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         vpc_id: "{{ vpc.vpc_id }}"
+         region: "{{ region }}"
+         state: present
+      register: igw
+
+    - name: Set up public subnet route table
+      ec2_vpc_route_table:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         vpc_id: "{{ vpc.vpc_id }}"
+         region: "{{ region }}"
+         state: present
+         tags: { 'Name': 'Public' }
+         subnets:
+           - "{{ vpc.subnets[0]['id'] }}"
+#           - "{{ vpc.subnet.id }}"
+         routes:
+           - dest: 0.0.0.0/0
+#           - gateway_id: igw-13c21b77
+             gateway_id: "{{ igw.gateway_id }}"
+      register: public_route_table
+ 
+    - name: Launch instance
+      ec2:
+         ec2_url: "{{ ec2_url }}"
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         state: present
+         key_name: "{{ keypair }}"
+         group_id: "{{ basic_firewall.group_id }}"
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         zone: "{{ zone }}"
+         vpc_subnet_id: "{{ vpc.subnets[0]['id'] }}"
+         instance_tags: {"name": "meetup notebook"}
+         assign_public_ip: yes
+      register: ec2
+
