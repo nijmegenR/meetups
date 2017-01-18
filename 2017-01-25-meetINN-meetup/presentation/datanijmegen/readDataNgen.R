@@ -31,5 +31,5 @@ tblNijmegen <- summarise(grpNijmegen,
                          P_LAAGINKP = mean(P_LAAGINKP),
                          G_GAS_TOT = mean(G_GAS_TOT)
 )
-
-ggplot(tblNijmegen, aes(x = BU_NAAM, y = P_GESCHEID)) + geom_bar(stat = "identity") + coord_flip()
+clrs <- nrow(tblNijmegen)
+ggplot(tblNijmegen, aes(x = BU_NAAM, y = P_GESCHEID, fill=rainbow(44))) + geom_bar(stat = "identity") + theme(legend.position="none") + coord_flip()

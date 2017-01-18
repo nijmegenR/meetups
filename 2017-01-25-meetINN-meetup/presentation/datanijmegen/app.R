@@ -19,7 +19,7 @@ tblNijmegen <- summarise(grpNijmegen,
 clrs <- nrow(tblNijmegen)
 
 ui <- miniPage(
-  gadgetTitleBar("Shiny gadget example"),
+  gadgetTitleBar("eveRybody example"),
   miniTabstripPanel(
     miniTabPanel("Parameters", icon = icon("sliders"),
                  miniContentPanel(
@@ -50,10 +50,8 @@ server <- function(input, output, session) {
   
   output$bar <- renderPlot({
     
-    ggplot(tblNijmegen, aes_string(x = "BU_NAAM", y = filldata()))
-    + geom_bar(stat = "identity")
-    + coord_flip()
-    + scale_colour_gradientn(colours = rainbow(clrs))
+    ggplot(tblNijmegen, aes_string(x = "BU_NAAM", y = filldata(), fill="rainbow(clrs)")) + geom_bar(stat = "identity") + theme(legend.position="none") + coord_flip()
+    
  
    })
   
