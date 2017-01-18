@@ -21,4 +21,15 @@ NijmegenMap <- NijmegenMap +
 NijmegenMap
 
 selection <- c("P_GESCHEID", "BEV_DICHTH", "P_KOOPW", "P_LAAGINKP", "G_GAS_TOT", "P_GESCHEID")
-select(dfNijmegen, selection[1])
+dfNijmegen[, c("BU_NAAM", selection[1])]
+
+grpNijmegen <- group_by(dfNijmegen, BU_NAAM)
+tblNijmegen <- summarise(grpNijmegen,
+                         P_GESCHEID = mean(P_GESCHEID),
+                         BEV_DICHTH = mean(BEV_DICHTH),
+                         P_KOOPWON = mean(P_KOOPWON),
+                         P_LAAGINKP = mean(P_LAAGINKP),
+                         G_GAS_TOT = mean(G_GAS_TOT)
+)
+
+ggplot(tblNijmegen, aes(x = BU_NAAM, y = P_GESCHEID)) + geom_bar(stat = "identity") + coord_flip()

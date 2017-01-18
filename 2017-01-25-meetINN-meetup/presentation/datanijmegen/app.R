@@ -10,11 +10,11 @@ library(dplyr)
 dfNijmegen <- read.csv("dataNijmegen.csv")
 grpNijmegen <- group_by(dfNijmegen, BU_NAAM)
 tblNijmegen <- summarise(grpNijmegen,
-                        mean(P_GESCHEID),
-                        mean(BEV_DICHTH),
-                        mean(P_KOOPWON),
-                        mean(P_LAAGINKP),
-                        mean(G_GAS_TOT)
+                         P_GESCHEID = mean(P_GESCHEID),
+                         BEV_DICHTH = mean(BEV_DICHTH),
+                         P_KOOPWON = mean(P_KOOPWON),
+                         P_LAAGINKP = mean(P_LAAGINKP),
+                         G_GAS_TOT = mean(G_GAS_TOT)
                         )
 
 ui <- miniPage(
@@ -27,7 +27,7 @@ ui <- miniPage(
     ),
     miniTabPanel("Visualize", icon = icon("area-chart"),
                  miniContentPanel(
-                   plotOutput("cars", height = "100%")
+                   plotOutput("bar", height = "100%")
                  )
     ),
     miniTabPanel("Map", icon = icon("map-o"),
@@ -45,16 +45,16 @@ ui <- miniPage(
 
 server <- function(input, output, session) {
   
+  filldata <- reactive({input$var})  
   
-  
-  output$cars <- renderPlot({
-    require(ggplot2)
-    ggplot(cars, aes(speed, dist)) + geom_point()
-  })
+  output$bar <- renderPlot({
+    
+    ggplot(tblNijmegen, aes_string(x = "BU_NAAM", y = filldata())) + geom_bar(stat = "identity") + coord_flip()
+ 
+   })
   
   output$map <- renderPlot({
   
-    filldata <- reactive({input$var})  
     ## Plot data
     mapCenter <- geocode("Nijmegen")
     Nijmegen <- get_map(c(lon=mapCenter$lon, lat=mapCenter$lat),zoom = 12)#, maptype = "terrain", source="google")
