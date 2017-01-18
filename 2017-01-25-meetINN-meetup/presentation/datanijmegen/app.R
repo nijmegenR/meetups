@@ -16,6 +16,7 @@ tblNijmegen <- summarise(grpNijmegen,
                          P_LAAGINKP = mean(P_LAAGINKP),
                          G_GAS_TOT = mean(G_GAS_TOT)
                         )
+clrs <- nrow(tblNijmegen)
 
 ui <- miniPage(
   gadgetTitleBar("Shiny gadget example"),
@@ -49,7 +50,10 @@ server <- function(input, output, session) {
   
   output$bar <- renderPlot({
     
-    ggplot(tblNijmegen, aes_string(x = "BU_NAAM", y = filldata())) + geom_bar(stat = "identity") + coord_flip()
+    ggplot(tblNijmegen, aes_string(x = "BU_NAAM", y = filldata()))
+    + geom_bar(stat = "identity")
+    + coord_flip()
+    + scale_colour_gradientn(colours = rainbow(clrs))
  
    })
   
