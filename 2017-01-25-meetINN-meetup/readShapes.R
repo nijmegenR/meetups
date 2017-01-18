@@ -39,3 +39,6 @@ NijmegenMap <- NijmegenMap +
                size=.2 ,color='black', data=dfNijmegen, alpha=0.8) +
   scale_fill_gradient(low = "green", high = "red")
 NijmegenMap
+
+csvNijmegen <- select(dfNijmegen, BU_CODE, long, lat, order, group)
+write.csv(csvNijmegen, "shapeInfo.csv")
