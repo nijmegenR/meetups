@@ -56,15 +56,27 @@ server <- function(input, output, session) {
    })
   
   output$map <- renderPlot({
+    
+    withProgress(message = 'Making plot', value = 0, {
   
+      n <- 2
+      
+      
     ## Plot data
     mapCenter <- geocode("Nijmegen")
     Nijmegen <- get_map(c(lon=mapCenter$lon, lat=mapCenter$lat),zoom = 12)#, maptype = "terrain", source="google")
+    
+    incProgress(1/n, detail = paste("Doing part", 1))
+    
     NijmegenMap <- ggmap(Nijmegen)
     NijmegenMap <- NijmegenMap +
       geom_polygon(aes_string(x="long", y="lat", group="group", fill=filldata()),
                    size=.2 ,color='black', data=dfNijmegen, alpha=0.8) +
       scale_fill_gradient(low = "green", high = "red")
+    
+    incProgress(2/n, detail = paste("Doing part", 2))
+    
+    })
     NijmegenMap
   })
   
