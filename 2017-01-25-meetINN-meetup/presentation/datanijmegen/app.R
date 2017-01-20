@@ -59,7 +59,7 @@ server <- function(input, output, session) {
     
     withProgress(message = 'Making plot', value = 0, {
   
-      n <- 2
+      n <- 3
       
       
     ## Plot data
@@ -69,12 +69,15 @@ server <- function(input, output, session) {
     incProgress(1/n, detail = paste("Doing part", 1))
     
     NijmegenMap <- ggmap(Nijmegen)
+    
+    incProgress(2/n, detail = paste("Doing part", 2))
+    
     NijmegenMap <- NijmegenMap +
       geom_polygon(aes_string(x="long", y="lat", group="group", fill=filldata()),
                    size=.2 ,color='black', data=dfNijmegen, alpha=0.8) +
       scale_fill_gradient(low = "green", high = "red")
     
-    incProgress(2/n, detail = paste("Doing part", 2))
+    incProgress(3/n, detail = paste("Doing part", 3))
     
     })
     NijmegenMap
