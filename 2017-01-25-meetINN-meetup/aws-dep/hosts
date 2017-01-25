@@ -1,4 +1,4 @@
 [aws_hosts]
-52.50.253.83 ansible_user=ec2-user
+34.249.51.207 ansible_user=ec2-user
 
 
